@@ -1,11 +1,14 @@
 # my-car-notes
+
 I this repo, I will develop a simple app to record all basic car operations (gas refueling, oil changes, preventative maintenance, corrective maintenance, etc) and the information associated to it (date, car's km on that note)
 
 ## Technologies used
+
 In this project, I will use Django as the back-end and how to store the data on S3, but as I don't have the free tier anymore, I will teach how to but will end using a free alternative to it.
 I will probably use a simple react front-end, just because.
 
 ## Keeping it real
+
 For now, I will make it basically as a todo list, but will grow over that.
 
 ## How to Run it
@@ -50,7 +53,7 @@ Chose where you will install you project:
 
 `/the/path/to/the/folder/you/want$ cd the_projects_name_you_want`
 
-If you have cloned all the project files to `/the/path/to/the/folder/you/want/the_projects_name_you_want/ ` 
+If you have cloned all the project files to `/the/path/to/the/folder/you/want/the_projects_name_you_want/ `
 
 now you can run:
 
@@ -105,6 +108,6 @@ and now
 
 `/the/path/to/the/folder/you/want/the_projects_name_you_want/frontend_site$ yarn dev`
 
-And there we have it, the project, by this point, should be ruiing in your http://localhost:5173/
+And there we have it, the project, by this point, should be ruiing in your `http://localhost:5173/`
 
-You can access it directly on the Django interface by http://localhost:8000/api/todos/
+You can access it directly on the Django interface by `http://localhost:8000/api/carnotes/`
