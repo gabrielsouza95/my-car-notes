@@ -1,32 +1,14 @@
 import React, { Component } from "react"
 import Modal from "./components/Modal"
+import axios from "axios"
 import './App.css'
-
-const carNoteItems = [
-  {
-      "id": 1,
-      "note_title": "Abastecimento",
-      "note_description": "30L Aditivada\r\nPosto Elefantinho Premium Nações",
-      "note_km": 200360,
-      "note_date": "2024-09-11T19:32:01Z",
-      "completed": true
-  },
-  {
-      "id": 2,
-      "note_title": "Abastecimento",
-      "note_description": "25L Aditivada\r\nPosto Elefantinho Premium Nações",
-      "note_km": 200680,
-      "note_date": "2024-09-25T21:53:00Z",
-      "completed": false
-  }
-]
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       viewCompleted: false,
-      carNoteList: carNoteItems,
+      noteList: [],
       modal: false,
       activeItem: {
         note_title: "",
@@ -38,6 +20,17 @@ class App extends Component {
     }
   }
 
+  componentDidMount() {
+    this.refreshList();
+  }
+
+  refreshList = () => {
+    axios
+      .get("http://localhost:8000/api/carnotes/")
+      .then((res) => this.setState({ carNoteList: res.data }))
+      .catch((err) => console.log(err));
+  };
+
   toggle = () => {
     this.setState({ modal: !this.state.modal });
   };
@@ -45,15 +38,25 @@ class App extends Component {
   handleSubmit = (item) => {
     this.toggle();
 
-    alert("save" + JSON.stringify(item));
+    if (item.id) {
+      axios
+        .put(`http://localhost:8000/api/carnotes/${item.id}/`, item)
+        .then((res) => this.refreshList());
+      return;
+    }
+    axios
+      .post("http://localhost:8000/api/carnotes/", item)
+      .then((res) => this.refreshList());
   };
 
   handleDelete = (item) => {
-    alert("delete" + JSON.stringify(item));
+    axios
+      .delete(`http://localhost:8000/api/carnotes/${item.id}/`)
+      .then((res) => this.refreshList());
   };
 
   createItem = () => {
-    const item = { title: "", description: "", completed: false };
+    const item = { note_title: "", note_description: "", note_km: 0, note_date: "0001-01-01", completed: false };
 
     this.setState({ activeItem: item, modal: !this.state.modal });
   };
@@ -91,8 +94,8 @@ class App extends Component {
 
   renderItems = () => {
     const { viewCompleted } = this.state;
-    const newItems = this.state.carNoteList.filter(
-      (item) => item.completed == viewCompleted
+    const newItems = this.state.noteList.filter(
+      (item) => item.completed === viewCompleted
     )
 
     return newItems.map((item) => (
@@ -101,8 +104,8 @@ class App extends Component {
         className="list-group-item d-flex justify-content-between align-items-center"
       >
         <span
-          className={`todo-title mr-2 ${
-            this.state.viewCompleted ? "completed-todo" : ""
+          className={`note-title mr-2 ${
+            this.state.viewCompleted ? "completed-note" : ""
           }`}
           title={item.note_description}
         >
@@ -136,6 +139,7 @@ class App extends Component {
               <div className="mb-4">
                 <button
                   className="btn btn-primary"
+                  onClick={this.createItem}
                 >
                   Add Car Note
                 </button>
