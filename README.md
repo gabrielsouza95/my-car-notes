@@ -111,3 +111,77 @@ and now
 And there we have it, the project, by this point, should be ruiing in your `http://localhost:5173/`
 
 You can access it directly on the Django interface by `http://localhost:8000/api/carnotes/`
+
+
+## Using S3 as Storage
+
+**Warning:** in the following, I will guide you how to do it, but as I don't have the free tier anymore, I can't tell if it's working or not.
+
+You can check the following steps on the [Django documentation](https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html) but bear with me and lets move.
+
+First, navigate to the root folder of the project, where the Pipfile is and run
+
+`pipenv install django-storages[s3]`
+
+After that, on the `setting.py` file, you will add
+
+```
+STORAGES = {
+    "default": {
+        "BACKEND": "storages.backends.s3.S3Storage",
+        "OPTIONS": {
+        
+        },
+    },
+}
+```
+
+then, on the root of the project, you add a `.env` file with
+
+```
+AWS_S3_SESSION_PROFILE=yourSessionProfileGoesHere
+AWS_ACCESS_KEY_ID=yourAccessKeyIdGoesHere
+AWS_SECRET_ACCESS_KEY=youSecretAccessKeyGoesHere
+AWS_SECURITY_TOKEN=youSecurityTokenGoesHere
+AWS_STORAGE_BUCKET_NAME=youBucketNameGoesHere
+AWS_DEFAULT_REGION=the-regions-goes-here-1
+```
+
+Also, if you don't have setup you IAM Policy yet ~~(dude, do you even AWS?)~~ you want to have one that looks like this
+
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "s3:PutObject",
+                "s3:GetObjectAcl",
+                "s3:GetObject",
+                "s3:ListBucket",
+                "s3:DeleteObject",
+                "s3:PutObjectAcl"
+            ],
+            "Principal": {
+                "AWS": "arn:aws:iam::example-AWS-account-ID:user/youUserNameGoesHere"
+            },
+            "Resource": [
+                "arn:aws:s3:::youBucketNameGoesHere/*",
+                "arn:aws:s3:::youBucketNameGoesHere"
+            ]
+        }
+    ]
+}
+```
+
+## Using a free cloud storage as Storage (wierdly put, but couldn't think otherwise)
+
+For those of you that are broken ~~as shit~~ like me, there is still hope.
+
+There is a free alternative to use a cloud storage and it's name is [Cloudinary](https://cloudinary.com/).
+
+It seems to be supported and you can install it via [Pypi](https://pypi.org/project/django-cloudinary-storage/) using the pipenv, of course.
+
+Here, Basu Dev Adhikari explains to us how to do it. ~~(you really thought you could escape the Indians tutorials after leaving college? HAHAHAHA But seriously, those guys help all of us a lot and I can only thank the mere existance of these guys and, for sure, you must know what to ask to the internet to find those gems of knowledge)~~
