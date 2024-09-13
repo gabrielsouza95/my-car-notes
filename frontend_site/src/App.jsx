@@ -27,7 +27,7 @@ class App extends Component {
   refreshList = () => {
     axios
       .get("http://localhost:8000/api/carnotes/")
-      .then((res) => this.setState({ carNoteList: res.data }))
+      .then((res) => this.setState({ noteList: res.data }))
       .catch((err) => console.log(err));
   };
 
