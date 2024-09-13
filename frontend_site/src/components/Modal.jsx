@@ -73,9 +73,9 @@ export default class CustomModal extends Component {
               />
             </FormGroup>
             <FormGroup>
-              <Label for="note-km">Date</Label>
+              <Label for="note-date">Date</Label>
               <Input
-                type="date"
+                type="datetime-local"
                 id="note-date"
                 name="note_date"
                 value={this.state.activeItem.note_date}
