@@ -184,4 +184,4 @@ There is a free alternative to use a cloud storage and it's name is [Cloudinary]
 
 It seems to be supported and you can install it via [Pypi](https://pypi.org/project/django-cloudinary-storage/) using the pipenv, of course.
 
-Here, Basu Dev Adhikari explains to us how to do it. ~~(you really thought you could escape the Indians tutorials after leaving college? HAHAHAHA But seriously, those guys help all of us a lot and I can only thank the mere existance of these guys and, for sure, you must know what to ask to the internet to find those gems of knowledge)~~
+[Here](https://www.youtube.com/watch?v=JV_GoKqj1mg&ab_channel=BasuDevAdhikari), Basu Dev Adhikari explains to us how to do it. ~~(you really thought you could escape the Indians tutorials after leaving college? HAHAHAHA But seriously, those guys help all of us a lot and I can only thank the mere existance of these guys and, for sure, you must know what to ask to the internet to find those gems of knowledge)~~
