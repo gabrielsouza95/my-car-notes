@@ -1,4 +1,5 @@
 import React, { Component } from "react"
+import Modal from "./components/Modal"
 import './App.css'
 
 const carNoteItems = [
@@ -26,8 +27,40 @@ class App extends Component {
     this.state = {
       viewCompleted: false,
       carNoteList: carNoteItems,
+      modal: false,
+      activeItem: {
+        note_title: "",
+        note_description: "",
+        note_km: 0,
+        note_date: "0001-01-01",
+        completed: false,
+      },
     }
   }
+
+  toggle = () => {
+    this.setState({ modal: !this.state.modal });
+  };
+
+  handleSubmit = (item) => {
+    this.toggle();
+
+    alert("save" + JSON.stringify(item));
+  };
+
+  handleDelete = (item) => {
+    alert("delete" + JSON.stringify(item));
+  };
+
+  createItem = () => {
+    const item = { title: "", description: "", completed: false };
+
+    this.setState({ activeItem: item, modal: !this.state.modal });
+  };
+
+  editItem = (item) => {
+    this.setState({ activeItem: item, modal: !this.state.modal });
+  };
 
   displayCompleted = (status) => {
     if (status) {
@@ -78,11 +111,13 @@ class App extends Component {
         <span>
           <button
             className="btn btn-secondary mr-2"
+            onClick={() => this.editItem(item)}
           >
             Edit
           </button>
           <button
             className="btn btn-danger"
+            onClick={() => this.handleDelete(item)}
           >
             Delete
           </button>
@@ -112,6 +147,13 @@ class App extends Component {
             </div>
           </div>
         </div>
+        {this.state.modal ? (
+          <Modal
+            activeItem={this.state.activeItem}
+            toggle={this.toggle}
+            onSave={this.handleSubmit}
+          />
+        ) : null}
       </main>
     )
   }
