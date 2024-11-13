@@ -112,7 +112,6 @@ And there we have it, the project, by this point, should be ruiing in your `http
 
 You can access it directly on the Django interface by `http://localhost:8000/api/carnotes/`
 
-
 ## Using S3 as Storage
 
 **Warning:** in the following, I will guide you how to do it, but as I don't have the free tier anymore, I can't tell if it's working or not.
@@ -130,7 +129,7 @@ STORAGES = {
     "default": {
         "BACKEND": "storages.backends.s3.S3Storage",
         "OPTIONS": {
-        
+    
         },
     },
 }
